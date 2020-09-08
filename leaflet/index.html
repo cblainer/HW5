@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+
+   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+
+   <script src = "./data/MemorialHall.geojson"></script>
+   <script src = "./data/SteeleBuilding.geojson"></script>
+   <script src = "./data/DavidPoplar.geojson"></script>
+
+</head>
+<body>
+
+    <div id="mapid"></div>
+    <style>
+        #mapid{ width: 900px; height: 500px;}
+    </style>
+
+    <script>
+        var map = L.map('mapid').setView([35.91, -79.05], 17);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>', }).addTo(map)
+
+        
+        L.marker([35.912973, -79.051685]).addTo(map)
+            .bindPopup("Davie Poplar")
+            .openPopup();
+
+        L.marker([35.911557, -79.050365]).addTo(map)
+            .bindPopup("Steele Building")
+            .openPopup();
+
+        L.geoJSON(MemorialHall).addTo(map)
+        L.geoJSON(SteeleBuilding).addTo(map)
+        L.geoJSON(DaviePoplar).addTo(map)
+
+        // L.geoJSON(MemorialHall).addTo(map)
+        var uncIcon=L.icon({
+                iconUrl: 'https://i.etsystatic.com/6991038/r/il/1e3a8d/1401262464/il_570xN.1401262464_pnd0.jpg',
+                iconSize: [50,50],
+                popupAnchor: [0,0]
+         });
+        var customPopup = "Memorial Hall<br/><img src='https://www.carolinaperformingarts.org/wp-content/uploads/2012/11/Memorial-Hall-660x440.jpg'width='100px'/>";
+
+        L.geoJSON(MemorialHall, { // a
+        pointToLayer: function (feature, latlng) { // b
+        return L.marker(latlng, {icon: uncIcon});}}) // c
+        .bindPopup(customPopup) // d
+        .addTo(map); //
+
+        //.L.geoJSON(SteeleBuilding).addTo(map)
+        var sbIcon=L.icon({
+                iconUrl: 'https://pbs.twimg.com/profile_images/918112684142399490/mm0Si2h-_400x400.jpg',
+                iconSize: [50,50],
+                popupAnchor: [0,0]
+         });
+        var customPopup = "Steele Building<br/><img src='https://blackandblue.web.unc.edu/files/2014/07/IMG_8974.jpg'width='100px'/>";
+
+        L.geoJSON(SteeleBuilding, { // a
+        pointToLayer: function (feature, latlng) { // b
+        return L.marker(latlng, {icon: sbIcon});}}) // c
+        .bindPopup(customPopup) // d
+        .addTo(map); //
+
+        //.L.geoJSON(DaviePoplar).addTo(map)
+        var dpIcon=L.icon({
+                iconUrl: 'https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/512x512/plain/tree.png',
+                iconSize: [50,50],
+                popupAnchor: [0,0]
+         });
+        var customPopup = "Davie Poplar<br/><img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Davie_Poplar.jpg/1200px-Davie_Poplar.jpg'width='100px'/>";
+
+        L.geoJSON(DaviePoplar, { // a
+        pointToLayer: function (feature, latlng) { // b
+        return L.marker(latlng, {icon: dpIcon});}}) // c
+        .bindPopup(customPopup) // d
+        .addTo(map); //
+
+    </script>
+
+    
+</body>
+</html>
